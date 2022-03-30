@@ -1,0 +1,57 @@
+{% extends 'googledriveapp/base.html' %} {% block body %}
+<div style="display: flex; padding: 10px 20px; justify-content: space-between">
+  <div class="">
+    <div class="container py-3">
+      <div class="row">
+        <!--  -->
+        {% for i in folder %}
+        <div class="col-sm">
+          <a href="{% url 'folder' i.id %}" style="text-decoration: none;">
+            <div class="card"
+              style="border: none !important; height: 17vh; width: 10vw; background-image: url(../../static/Blue-Folder.png); background-size: cover;">
+              <div class="card-body">
+                <h5 class="card-title text-white" style="font-size: 9px; position: relative; top: 15px;">
+                  {{i.foldername}}</h5>
+                <p class="card-text text-white" style="font-size: 9px; position: relative; top: 15px;">
+                  {{i.folderdesc}}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+        <!--  -->
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add Folder
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Folder</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'addfolder' %}" method="POST">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Folder Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="foldername" />
+                <label for="exampleFormControlInput1" class="form-label">Folder Desc</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="desc" />
+                <button class="btn btn-outline-success my-3">Add Folder</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}
